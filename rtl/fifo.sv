@@ -2,7 +2,7 @@
 //    head = write pointer
 //    tail = read pointer
 module count_fifo #( // counter
-    parameter DATA_WIDTH = 8,  // Veri genişliği
+    parameter DATA_WIDTH = 4,  // Veri genişliği
     parameter FIFO_DEPTH = 4  // FIFO derinliği
 )(
     input  logic clk,          // Saat sinyali
@@ -24,6 +24,7 @@ module count_fifo #( // counter
         if (rst) begin
             write_ptr <= 0;
             read_ptr <= 0;
+            read_data <= 0;
             fifo_count <= 0;
         end else begin
             case ({write_en, read_en})
@@ -48,7 +49,7 @@ module count_fifo #( // counter
 endmodule
 
 module le_fifo#( // last empty
-    parameter DATA_WIDTH = 8,  // Veri genişliği
+    parameter DATA_WIDTH = 4,  // Veri genişliği
     parameter FIFO_DEPTH = 4  // FIFO derinliği
 )(
     input  logic clk,          // Saat sinyali
@@ -70,6 +71,7 @@ module le_fifo#( // last empty
         if (rst) begin
             write_ptr <= 0;
             read_ptr <= 0;
+            read_data <= 0;
         end else begin
             if (write_en && !full) begin
                 fifo_mem[write_ptr] <= write_data;
@@ -88,7 +90,7 @@ module le_fifo#( // last empty
 endmodule
 
 module wbit_fifo#(  // wrapper bit
-    parameter DATA_WIDTH = 8,  // Veri genişliği
+    parameter DATA_WIDTH = 4,  // Veri genişliği
     parameter FIFO_DEPTH = 4  // FIFO derinliği
 )(
     input  logic clk,          // Saat sinyali
@@ -110,6 +112,7 @@ module wbit_fifo#(  // wrapper bit
         if (rst) begin
             write_ptr <= 0;
             read_ptr <= 0;
+            read_data <= 0;
         end else begin
             if (write_en && !full) begin
                 fifo_mem[write_ptr[ADDR_WIDTH-1:0]] <= write_data;

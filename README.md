@@ -69,3 +69,9 @@ empty = (write_ptr == read_ptr);
 3. Observe and verify Full/Empty timing for each implementation.
 
 ---
+
+Here's a clearer and more polished version of your note:
+
+---
+
+**Note**: When implementing this design on the Basys-3 board, you need to **slow down the clock**. The default clock runs at a very high frequency, so a single push of a button may be detected thousands of times by the FIFO. To avoid this, use a clock divider or debounce logic.
